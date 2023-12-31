@@ -1,0 +1,37 @@
+NODE=$(shell which node)
+
+# default make target
+all: cfg debug
+
+cfg:
+	node-gyp configure --debug
+cfgr:
+	node-gyp configure --release
+
+debug:
+	node-gyp build --debug
+
+rel:
+	node-gyp build --release
+
+clean:
+	rm -rf build
+
+format:
+	@find rpigpio2 -type f \( -name '*.cpp' -o -name '*.h' \) | xargs clang-format -i
+	@find app -type f \( -name '*.ts' -o -name '*.js' \) | xargs clang-format -i
+
+####################################################################################################
+# Apps
+
+js:
+	$(NODE) app/js/main.js
+
+blink:
+	$(NODE) app/blink/main.js
+
+lcd16:
+	$(NODE) app/lcd1602/main.js
+
+mul:
+	$(NODE) app/multi/main.js
