@@ -1,18 +1,19 @@
 NODE=$(shell which node)
+NODE_GYP=./node_modules/node-gyp/bin/node-gyp.js
 
 # default make target
 all: cfg debug
 
 cfg:
-	node-gyp configure --debug
+	$(NODE_GYP) configure --debug
 cfgr:
-	node-gyp configure --release
+	$(NODE_GYP) configure --release
 
 debug:
-	node-gyp build --debug
+	$(NODE_GYP) build --debug
 
 rel:
-	node-gyp build --release
+	$(NODE_GYP) build --release
 
 clean:
 	rm -rf build
@@ -32,6 +33,9 @@ blink:
 
 lcd16:
 	$(NODE) app/lcd1602/main.js
+
+cputemp:
+	$(NODE) app/cputemp/main.js
 
 mul:
 	$(NODE) app/multi/main.js
