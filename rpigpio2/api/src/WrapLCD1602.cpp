@@ -37,6 +37,7 @@ void WrapLCD1602::Init(Napi::Env &env, Napi::Object &exports)
       InstanceMethod("cursor", &WrapLCD1602::API_LCD1602_cursor),
       InstanceMethod("blink", &WrapLCD1602::API_LCD1602_blink),
       InstanceMethod("puts", &WrapLCD1602::API_LCD1602_puts),
+      InstanceMethod("putc", &WrapLCD1602::API_LCD1602_putc),
       InstanceMethod("move", &WrapLCD1602::API_LCD1602_move),
     }
   );
@@ -164,6 +165,21 @@ Napi::Value WrapLCD1602::API_LCD1602_puts(const Napi::CallbackInfo &info)
   auto data = info[0].As<Napi::String>();
   std::string value = std::string(data);
   this->lcd1602().puts(value.c_str());
+
+  return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapLCD1602::API_LCD1602_putc(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+
+  if (info.Length() != 1)
+  {
+    Napi::Error::New(env, "Requre 1 argument(data)").ThrowAsJavaScriptException();
+  }
+
+  auto ch = info[0].As<Napi::Number>();
+  this->lcd1602().putch(ch.Int32Value() & 0xff);
 
   return Napi::Number::New(env, 0);
 }

@@ -9,11 +9,15 @@
       ],
       "include_dirs": [
         "i2c/include",
-        "gpio/include",
+      ],
+      "dependencies": [
+        "rpigiop2_gpio",
+        "rpigiop2_gpiolib",
       ],
 
       "direct_dependent_settings": {
         "include_dirs": [
+          "i2c/include",
         ],
         "libraries": [
         ],

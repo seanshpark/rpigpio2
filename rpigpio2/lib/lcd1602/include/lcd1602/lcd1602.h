@@ -41,8 +41,8 @@ public:
   void display(bool enable); // display on/off
   void cursor(bool enable);  // cursor on/off
   void blink(bool enable);   // blinking on/off
-  void putc(const char c);
   void puts(const char *str);
+  void putch(uint8_t ch);
   void move(uint8_t row, uint8_t col);
 
 private:
@@ -50,6 +50,7 @@ private:
   void cursor_set(uint8_t data);
   void display_set(void);
   void entrymode_set(uint8_t data);
+  void putc(const char c);
 
 private:
   void init_4bit(void);

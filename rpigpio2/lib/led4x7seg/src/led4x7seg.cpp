@@ -80,7 +80,7 @@ void LED4x7Seg::show(const std::string value)
     auto c = value.at(i);
     if (i == col_idx)
     {
-      colon = (c == ':');
+      colon = (c == ':') || (c == '.');
     }
     else
     {

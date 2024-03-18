@@ -2,7 +2,7 @@
 // Test application: LCD1602(HD44780) + PCF8574 + I2C
 //
 
-const RpiLcd1602 = require(process.cwd() + '/build/Release/RpiLcd1602.js');
+const RpiLcd1602 = require(process.cwd() + '/build/Debug/RpiLcd1602.js');
 const rpilcd1602 = new RpiLcd1602();
 rpilcd1602.init(1, 0x27);
 // 1 is for I2C-1 as (SDA @ pin2, CLK @ pin3)

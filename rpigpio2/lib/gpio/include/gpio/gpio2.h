@@ -14,38 +14,50 @@
  * limitations under the License.
  */
 
-#ifndef __RPIGPIO2_LIB_I2C_H__
-#define __RPIGPIO2_LIB_I2C_H__
+#ifndef __RPIGPIO2_LIB_GPIO_GPIO2_H__
+#define __RPIGPIO2_LIB_GPIO_GPIO2_H__
 
-#include "gpio/gpio2.h"
+#include <gpiolib/gpiolib.h>
+
+#include <cstdint>
+#include <cstdlib>
 
 namespace rpigpio2
 {
 
-class I2C
+class GPIO
 {
 public:
-  I2C() = default;
-  virtual ~I2C() = default;
+  enum PIN
+  {
+    IN = 1,
+    OUT = 2,
+    ALT0 = 3,
+  };
 
 public:
-  bool init(GPIO *gpio, int32_t dev, int32_t addr);
+  GPIO() = default;
+  virtual ~GPIO() = default;
+
+public:
+  bool init(void);
   void release(void);
 
-public:
-  bool initialized(void) { return _dev_fd > 0; }
+  void cfg(int32_t pin, PIN dir);
+  int set(int32_t pin, bool val);
 
-public:
-  bool write_byte(uint8_t b);
-  bool write_buffer(uint8_t *b, size_t s);
+  bool initialized(void) { return _initialized;}
 
 private:
-  GPIO *_gpio = nullptr; // not used for now
-  int _dev_fd = -1;
-  int32_t _dev = 0;  // /dev/i2c-?
-  int32_t _addr = 0; // I2C slave address
+  GpioLib _lib;
+  bool _initialized = false;
+
+  uint32_t _num_gpios = 0;
+  GPIO_FSEL_T _fsparam = GPIO_FSEL_MAX;
+  GPIO_DRIVE_T _drive = DRIVE_MAX;
+  GPIO_PULL_T _pull = PULL_MAX;
 };
 
 } // namespace rpigpio2
 
-#endif // __RPIGPIO2_LIB_I2C_H__
+#endif // __RPIGPIO2_LIB_GPIO_GPIO2_H__

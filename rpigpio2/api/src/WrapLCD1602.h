@@ -41,6 +41,7 @@ public:
   Napi::Value API_LCD1602_cursor(const Napi::CallbackInfo &info);
   Napi::Value API_LCD1602_blink(const Napi::CallbackInfo &info);
   Napi::Value API_LCD1602_puts(const Napi::CallbackInfo &info);
+  Napi::Value API_LCD1602_putc(const Napi::CallbackInfo &info);
   Napi::Value API_LCD1602_move(const Napi::CallbackInfo &info);
 
 public:

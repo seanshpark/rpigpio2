@@ -19,7 +19,7 @@
 
 #include "WrapNapi.h"
 
-#include "gpio/gpio.h"
+#include "gpio/gpio2.h"
 
 namespace rpigpio2
 {

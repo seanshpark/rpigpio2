@@ -1,5 +1,6 @@
 {
   'includes': [
+    'rpigpio2/lib/gpiolib.gypi',
     'rpigpio2/lib/gpio.gypi',
     'rpigpio2/lib/i2c.gypi',
     'rpigpio2/lib/pcf8574.gypi',

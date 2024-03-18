@@ -8,6 +8,7 @@
 
       "dependencies": [
         "rpigiop2_gpio",
+        "rpigiop2_gpiolib",
         "rpigiop2_i2c",
         "rpigiop2_lcd1602",
         "rpigiop2_led4x7seg",
@@ -26,6 +27,7 @@
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
         "../lib/gpio/include",
+        "../lib/gpiolib/include",
         "../lib/i2c/include",
         "../lib/lcd1602/include",
         "../lib/led4x7seg/include",

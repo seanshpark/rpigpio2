@@ -18,7 +18,7 @@ function exitHandler(options, exitCode) {
     led4x7seg.release();
     tm1637.release();
     gpiobj.release();
-    process.exit(exitCode);
+    process.exit(0);
   }
 }
 
