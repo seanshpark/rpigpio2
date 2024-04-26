@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef __RPIGPIOPP_LIB_LED4X7SEG_H__
-#define __RPIGPIOPP_LIB_LED4X7SEG_H__
+#ifndef __RPIGPIO2_LIB_LED4X7SEG_H__
+#define __RPIGPIO2_LIB_LED4X7SEG_H__
 
 #include "tm1637/tm1637.h"
 
@@ -44,4 +44,4 @@ private:
 
 } // namespace rpigpio2
 
-#endif // __RPIGPIOPP_LIB_LED4X7SEG_H__
+#endif // __RPIGPIO2_LIB_LED4X7SEG_H__

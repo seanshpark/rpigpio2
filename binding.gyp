@@ -7,6 +7,7 @@
     'rpigpio2/lib/tm1637.gypi',
     'rpigpio2/lib/lcd1602.gypi',
     'rpigpio2/lib/led4x7seg.gypi',
+    'rpigpio2/lib/oled128x64.gypi',
 
     'rpigpio2/api/api.gypi',
     'rpigpio2/core/core.gypi',

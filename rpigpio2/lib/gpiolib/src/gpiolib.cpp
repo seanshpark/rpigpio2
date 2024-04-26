@@ -24,8 +24,6 @@ const char *__drive_names[] = {"dl", "dh", "--"};
 const char *__fsel_names[] = {"a0", "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "??",
                               "??", "??", "??", "??", "??", "??", "ip", "op", "gp", "no"};
 
-void (*verbose_callback)(const char *);
-
 GPIO_CHIP_INSTANCE_T *GpioLib::create_instance(const GPIO_CHIP_T *chip, uint64_t phys_addr,
                                                const char *name, const char *dtnode)
 {
@@ -339,7 +337,7 @@ const GPIO_CHIP_T *_find_chip(const char *name)
 
   printf("!!! gpio_find_chip: %s\r\n", name);
   //for (chip = &__start_gpiochips; name && chip < &__stop_gpiochips; chip++)
-  for (uint32_t i = 0, leng = ARRAY_SIZE(__gpio_chips); i < leng; ++i)
+  for (uint32_t i = 0; __gpio_chips[i].name != nullptr; ++i)
   {
     chip = &__gpio_chips[i];
     //printf("!!! chip-name: %s\r\n", chip->name);
@@ -384,8 +382,8 @@ int GpioLib::init(void)
   _hdr_gpios[34] = GPIO_GND;
   _hdr_gpios[39] = GPIO_GND;
 
-  if (verbose_callback)
-    (*verbose_callback)("GPIO chips:\n");
+  if (_verbose_callback)
+    (*_verbose_callback)("GPIO chips:\n");
 
   dt_set_path(dtpath);
 
@@ -451,12 +449,12 @@ int GpioLib::init(void)
     chip = inst->chip;
     inst->num_gpios = chip->interface->gpio_count(inst->priv);
 
-    if (verbose_callback)
+    if (_verbose_callback)
     {
       char msg_buf[100];
       snprintf(msg_buf, sizeof(msg_buf), "  %" PRIx64 ": %s (%d gpios)\n", inst->phys_addr,
                chip->name, inst->num_gpios);
-      (*verbose_callback)(msg_buf);
+      (*_verbose_callback)(msg_buf);
     }
 
     if (!inst->num_gpios)
@@ -550,8 +548,8 @@ int GpioLib::init_by_name(const char *name)
   for (pin = 0; pin <= NUM_HDR_PINS; pin++)
     _hdr_gpios[pin] = GPIO_INVALID;
 
-  if (verbose_callback)
-    (*verbose_callback)("GPIO chips:\n");
+  if (_verbose_callback)
+    (*_verbose_callback)("GPIO chips:\n");
 
   chip = _find_chip(name);
   if (!chip)
@@ -577,11 +575,11 @@ int GpioLib::init_by_name(const char *name)
     _gpio_names[gpio] = strdup(name);
   }
 
-  if (inst->num_gpios && verbose_callback)
+  if (inst->num_gpios && _verbose_callback)
   {
     char msg_buf[100];
     snprintf(msg_buf, sizeof(msg_buf), "  %s (%d gpios)\n", chip->name, inst->num_gpios);
-    (*verbose_callback)(msg_buf);
+    (*_verbose_callback)(msg_buf);
   }
 
   return (int)_num_gpios;
@@ -652,8 +650,7 @@ int GpioLib::mmap(void)
 
 void GpioLib::set_verbose(void (*callback)(const char *))
 {
-  //
-  verbose_callback = callback;
+  _verbose_callback = callback;
 }
 
 void GpioLib::munmap(void)

@@ -14,6 +14,7 @@
         "rpigiop2_led4x7seg",
         "rpigiop2_pcf8574",
         "rpigiop2_tm1637",
+        "rpigiop2_oled128x64",
       ],
       "sources": [
         "src/Wrapper.cpp",
@@ -23,6 +24,7 @@
         "src/WrapLED4x7Seg.cpp",
         "src/WrapPCF8574.cpp",
         "src/WrapTM1637.cpp",
+        "src/WrapOLED128x64.cpp",
       ],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
@@ -33,6 +35,7 @@
         "../lib/led4x7seg/include",
         "../lib/pcf8574/include",
         "../lib/tm1637/include",
+        "../lib/oled128x64/include",
       ],
       'defines': [ 'NAPI_CPP_EXCEPTIONS' ],
     }

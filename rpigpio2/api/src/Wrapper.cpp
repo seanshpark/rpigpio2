@@ -22,6 +22,7 @@
 #include "WrapTM1637.h"
 #include "WrapLCD1602.h"
 #include "WrapLED4x7Seg.h"
+#include "WrapOLED128x64.h"
 
 #include <cassert>
 #include <iostream>
@@ -53,6 +54,7 @@ void Wrapper::Init(Napi::Env &env, Napi::Object &exports)
   WrapTM1637::Init(env, exports);
   WrapLCD1602::Init(env, exports);
   WrapLED4x7Seg::Init(env, exports);
+  WrapOLED128x64::Init(env, exports);
 }
 
 //--------------------------------------------------------------------------------------------------

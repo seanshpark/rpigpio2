@@ -88,6 +88,8 @@ protected:
   unsigned _num_gpio_chips = 0;
   GPIO_CHIP_INSTANCE_T _gpio_chips[MAX_GPIO_CHIPS] = {};
 
+  void (*_verbose_callback)(const char *) = nullptr;
+
 protected:
   unsigned _num_gpios = 0;
   unsigned _first_hdr_pin = GPIO_INVALID;

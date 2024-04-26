@@ -5,12 +5,12 @@
 
 #include <stdint.h>
 
+#define ROUND_UP(n, d) ((((n) + (d) - 1) / (d)) * (d))
+#define UNUSED(x) (void)(x)
+
 #define DECLARE_GPIO_CHIP(name, compatible, iface, size, data) \
   ::rpigpio2::GPIO_CHIP_T name##_chip                          \
     __attribute__((used,section("gpiochips"))) = {#name, compatible, iface, size, data}
-
-#define ROUND_UP(n, d) ((((n) + (d) - 1) / (d)) * (d))
-#define UNUSED(x) (void)(x)
 
 namespace rpigpio2
 {
@@ -42,7 +42,7 @@ struct GPIO_CHIP_INTERFACE_
   const char *(*gpio_get_fsel_name)(void *priv, uint32_t gpio, GPIO_FSEL_T fsel);
 };
 
-extern const GPIO_CHIP_T __gpio_chips[10];
+extern const GPIO_CHIP_T __gpio_chips[];
 
 } // namespace rpigpio2
 

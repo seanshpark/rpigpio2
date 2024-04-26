@@ -38,6 +38,13 @@ EXTERN_GPIO_CHIP(rp1);
 namespace rpigpio2
 {
 
+namespace
+{
+
+GPIO_CHIP_T chip_end = { nullptr, nullptr, nullptr, 0, 0};
+
+} // nmespace
+
 const GPIO_CHIP_T __gpio_chips[] = {
   brcmstb_chip,
   bcm2712_chip,
@@ -48,7 +55,8 @@ const GPIO_CHIP_T __gpio_chips[] = {
   bcm2712d0_aon_chip,
   bcm2835_chip,
   bcm2711_chip,
-  rp1_chip
+  rp1_chip,
+  chip_end
 };
 
 } // namespace rpigpio2
