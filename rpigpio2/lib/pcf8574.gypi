@@ -9,12 +9,16 @@
       ],
       "include_dirs": [
         "pcf8574/include",
-        "i2c/include",
-        "gpio/include"
+      ],
+      "dependencies": [
+        "rpigiop2_gpiolib",
+        "rpigiop2_gpio",
+        "rpigiop2_i2c",
       ],
 
       "direct_dependent_settings": {
         "include_dirs": [
+          "pcf8574/include",
         ],
         "libraries": [
         ],

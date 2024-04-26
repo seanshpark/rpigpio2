@@ -5,14 +5,18 @@
       "type": "static_library",
 
       "sources": [
-        "gpio/src/gpio.cpp",
+        "gpio/src/gpio2.cpp",
       ],
       "include_dirs": [
         "gpio/include"
       ],
+      "dependencies": [
+        "rpigiop2_gpiolib"
+      ],
 
       "direct_dependent_settings": {
         "include_dirs": [
+          "gpio/include",
         ],
         "libraries": [
         ],

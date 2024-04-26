@@ -97,7 +97,7 @@ function main() {
       if (timer_id != null)
         clearInterval(timer_id);
       app.exit();
-      process.exit(exitCode);
+      process.exit(0);
     }
   }
 

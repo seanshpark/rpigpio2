@@ -24,7 +24,7 @@ function exitHandler(options, exitCode) {
     pcf8574.release();
     i2c.release();
     gpio.release();
-    process.exit(exitCode);
+    process.exit(0);
   }
 }
 

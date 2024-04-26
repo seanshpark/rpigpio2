@@ -18,7 +18,7 @@ function exitHandler(options, exitCode) {
     gpiobj.set(24, true);  // reset LED as OFF
     gpiobj.release();
 
-    process.exit(exitCode);
+    process.exit(0);
   }
 }
 

@@ -110,9 +110,15 @@ bool LCD1602::init(PCF8574 *pcf8574)
 
 void LCD1602::release(void)
 {
+  _back_light = false;
+  _display = false;
+  _cursor = false;
+  _blink = false;
+  display_set();
+  clear();
+
   _pcf8574 = nullptr;
   _initalized = false;
-  _back_light = false;
 
   std::cout << "LCD1602::release" << std::endl;
 }
@@ -166,6 +172,12 @@ void LCD1602::puts(const char *str)
   }
 }
 
+void LCD1602::putch(uint8_t ch)
+{
+  send_data(ch);
+  usleep(50);
+}
+
 void LCD1602::move(uint8_t row, uint8_t col)
 {
   uint8_t cmd = HD44780_LCD_CMD_DDRAMADDR;
@@ -215,6 +227,8 @@ void LCD1602::init_4bit(void)
 
 void LCD1602::send_4bits(uint8_t lcddata, uint32_t delay)
 {
+  lcddata &= ~PCF8574_LCD1604_BL;
+
   // this sends 4bits to DB4~DB7 of HD44780
   // lower 4bits are used for control.
   // to write, send bits + EN high, wait 2usec, drop EN low, wait delay
@@ -233,8 +247,6 @@ void LCD1602::send_4bits(uint8_t lcddata, uint32_t delay)
 void LCD1602::send_data(uint8_t data)
 {
   uint8_t lcddata;
-
-  // TODO support send data with 8bits
 
   // RS high is to select DATA
   // bit 7~4

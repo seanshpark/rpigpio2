@@ -9,13 +9,17 @@
       ],
       "include_dirs": [
         "lcd1602/include",
-        "pcf8574/include",
-        "i2c/include",
-        "gpio/include",
+      ],
+      "dependencies": [
+        "rpigiop2_pcf8574",
+        "rpigiop2_i2c",
+        "rpigiop2_gpio",
+        "rpigiop2_gpiolib",
       ],
 
       "direct_dependent_settings": {
         "include_dirs": [
+          "lcd1602/include",
         ],
         "libraries": [
         ],

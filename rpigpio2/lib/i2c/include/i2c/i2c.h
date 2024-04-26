@@ -17,7 +17,7 @@
 #ifndef __RPIGPIO2_LIB_I2C_H__
 #define __RPIGPIO2_LIB_I2C_H__
 
-#include "gpio/gpio.h"
+#include "gpio/gpio2.h"
 
 namespace rpigpio2
 {

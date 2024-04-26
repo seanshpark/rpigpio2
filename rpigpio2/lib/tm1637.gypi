@@ -9,11 +9,15 @@
       ],
       "include_dirs": [
         "tm1637/include",
-        "gpio/include"
+      ],
+      "dependencies": [
+        "rpigiop2_gpiolib",
+        "rpigiop2_gpio",
       ],
 
       "direct_dependent_settings": {
         "include_dirs": [
+          "tm1637/include",
         ],
         "libraries": [
         ],

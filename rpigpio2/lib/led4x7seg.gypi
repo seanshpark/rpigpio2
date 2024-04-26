@@ -8,9 +8,10 @@
         "led4x7seg/src/led4x7seg.cpp",
       ],
       "include_dirs": [
-        "gpio/include",
-        "tm1637/include",
         "led4x7seg/include",
+        "tm1637/include",
+        "gpio/include",
+        "gpiolib/include",
       ],
 
       "direct_dependent_settings": {
