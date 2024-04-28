@@ -31,23 +31,41 @@ function rand(range) {
   return Math.floor(Math.random() * range);
 }
 
+let XEND = 127;
+let YEND = 64;
+let line_x = true;
+let xy = 0;
+let step;
+let xc;
+let yc;
+
 timerId = setInterval(function() {
-  let step = rand(3) + 2;
-  let xc = rand(118) + 5;
-  let yc = rand(54) + 5;
-  let x, y;
-
-  for (x=0; x<128; x+=step) {
-    oled128x64.line(x, 0, xc, yc, 1);
-    oled128x64.line(xc, yc, x, 63, 1);
-  }
-  for (y=0; y<64; y+=step) {
-    oled128x64.line(0, y, xc, yc, 1);
-    oled128x64.line(xc, yc, 127, y, 1);
+  if (line_x && xy === 0) {
+    step = rand(3) + 2;
+    xc = rand(118) + 5;
+    yc = rand(54) + 5;
   }
 
-  oled128x64.clear();
-}, 1);
+  if (line_x) {
+    oled128x64.line(xy, 0, xc, yc, 1);
+    oled128x64.line(xc, yc, xy, YEND, 1);
+    xy += step;
+    if (xy > XEND) {
+      line_x = false;
+      xy = 0;
+    }
+  }
+  else {
+    oled128x64.line(0, xy, xc, yc, 1);
+    oled128x64.line(xc, yc, XEND, xy, 1);
+    xy += step;
+    if (xy > YEND) {
+      line_x = true;
+      xy = 0;
+      oled128x64.clear();
+    }
+  }
+}, 0);
 
 function exitHandler(options, exitCode) {
   if (options.exit) {
