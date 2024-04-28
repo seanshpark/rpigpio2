@@ -41,6 +41,7 @@ public:
   Napi::Value API_OLED128x64_colAddr(const Napi::CallbackInfo &info);
   Napi::Value API_OLED128x64_pageAddr(const Napi::CallbackInfo &info);
   Napi::Value API_OLED128x64_clear(const Napi::CallbackInfo &info);
+  Napi::Value API_OLED128x64_line(const Napi::CallbackInfo &info);
 
 public:
   OLED128x64 &oled128x64() { return _oled128x64; }

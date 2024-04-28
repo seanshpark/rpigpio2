@@ -376,7 +376,7 @@ class ClockTemp {
     let self = this;
     this._timerId = setInterval(function() {
       self.refresh();
-    }, 250);
+    }, 500);
   }
 
   end() {
@@ -387,11 +387,13 @@ class ClockTemp {
   }
 }
 
-oled128x64.clear();
 // full screen mode
 oled128x64.addrMode(0);
 oled128x64.colAddr(0x00, 0x7f);
 oled128x64.pageAddr(0x00, 0x07);
+
+oled128x64.clear();
+
 // display_font(font_24x32_bitmap);
 
 // lcd1602.puts('Hello World!');

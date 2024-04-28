@@ -19,13 +19,15 @@
 
 #include "i2c/i2c.h"
 
+#include <gfxlib/gfxlib.h>
+
 namespace rpigpio2
 {
 
-class OLED128x64
+class OLED128x64 : public Gfx
 {
 public:
-  OLED128x64() = default;
+  OLED128x64();
   virtual ~OLED128x64() = default;
 
 public:
@@ -36,12 +38,28 @@ public:
   bool initialized(void) { return _initalized; }
 
 public:
+  void init_display(void);
+  void clear_display(void);
+  void flush_display(void);
+  void draw_pixel(int16_t x, int16_t y, uint16_t color) override;
+
+protected:
+  void draw_fast_vline(int16_t x, int16_t y, int16_t w, uint16_t color) override;
+  void draw_fast_hline(int16_t x, int16_t y, int16_t h, uint16_t color) override;
+  void draw_fast_hline_internal(int16_t x, int16_t y, int16_t w, uint16_t color);
+  void draw_fast_vline_internal(int16_t x, int16_t y, int16_t h, uint16_t color);
+
+protected:
+  uint8_t *_buffer = nullptr;
+
+public:
   void test(void);
 
 public:
+  // low level SSD1306 commands
   bool cmd(uint8_t v);
   bool data(uint8_t v);
-  bool data(uint8_t *b, size_t s);
+  bool data(uint8_t *b, size_t l);
   bool data(uint8_t *b, uint32_t s, uint32_t l);
 
   bool addrMode(uint8_t v);
@@ -52,11 +70,12 @@ public:
 
 private:
   void init_ssd1306(void);
+  void chk_resize_temp(size_t s);
 
 private:
   I2C *_i2c = nullptr;
   uint8_t *_temp_buff = nullptr;
-  uint32_t _buff_size = 0;
+  uint32_t _temp_size = 0;
   bool _initalized = false;
 };
 

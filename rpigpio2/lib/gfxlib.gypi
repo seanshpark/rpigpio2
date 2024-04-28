@@ -1,25 +1,21 @@
 {
   "targets": [
     {
-      "target_name": "rpigiop2_oled128x64",
+      "target_name": "rpigiop2_gfxlib",
       "type": "static_library",
 
       "sources": [
-        "oled128x64/src/oled128x64.cpp",
+        "gfxlib/src/gfxlib.cpp",
       ],
       "include_dirs": [
-        "oled128x64/include",
+        "gfxlib/include"
       ],
       "dependencies": [
-        "rpigiop2_gpiolib",
-        "rpigiop2_gpio",
-        "rpigiop2_i2c",
-        "rpigiop2_gfxlib",
       ],
 
       "direct_dependent_settings": {
         "include_dirs": [
-          "oled128x64/include",
+          "gfxlib/include"
         ],
         "libraries": [
         ],

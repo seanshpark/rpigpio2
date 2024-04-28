@@ -39,6 +39,8 @@ void WrapOLED128x64::Init(Napi::Env &env, Napi::Object &exports)
       InstanceMethod("pageAddr", &WrapOLED128x64::API_OLED128x64_pageAddr),
 
       InstanceMethod("clear", &WrapOLED128x64::API_OLED128x64_clear),
+
+      InstanceMethod("line", &WrapOLED128x64::API_OLED128x64_line),
     }
   );
   // clang-format on
@@ -159,8 +161,8 @@ Napi::Value WrapOLED128x64::API_OLED128x64_data(const Napi::CallbackInfo &info)
       auto start = info[1].As<Napi::Number>();
       auto length = info[2].As<Napi::Number>();
 
-      //std::cout << "oled128x64 data typed array " << data.ByteLength() << ": "
-      //          << start.Uint32Value() << ", " << length.Uint32Value() << std::endl;
+      std::cout << "oled128x64 data typed array " << data.ByteLength() << ": "
+                << start.Uint32Value() << ", " << length.Uint32Value() << std::endl;
       if (!this->oled128x64().data(buffer, start.Uint32Value(), length.Uint32Value()))
       {
         Napi::Error::New(env, "Failed to OLED128x64 send data").ThrowAsJavaScriptException();
@@ -186,7 +188,7 @@ Napi::Value WrapOLED128x64::API_OLED128x64_addrMode(const Napi::CallbackInfo &in
 
   if (info.Length() != 1)
   {
-    Napi::Error::New(env, "Requre 2 argument(mode)").ThrowAsJavaScriptException();
+    Napi::Error::New(env, "Requre 1 argument(mode)").ThrowAsJavaScriptException();
   }
 
   auto mode = info[0].As<Napi::Number>();
@@ -205,7 +207,7 @@ Napi::Value WrapOLED128x64::API_OLED128x64_colAddr(const Napi::CallbackInfo &inf
 
   if (info.Length() != 2)
   {
-    Napi::Error::New(env, "Requre 1 argument(start, end)").ThrowAsJavaScriptException();
+    Napi::Error::New(env, "Requre 2 argument(start, end)").ThrowAsJavaScriptException();
   }
 
   auto colStart = info[0].As<Napi::Number>();
@@ -225,7 +227,7 @@ Napi::Value WrapOLED128x64::API_OLED128x64_pageAddr(const Napi::CallbackInfo &in
 
   if (info.Length() != 2)
   {
-    Napi::Error::New(env, "Requre 1 argument(start, end)").ThrowAsJavaScriptException();
+    Napi::Error::New(env, "Requre 2 argument(start, end)").ThrowAsJavaScriptException();
   }
 
   auto pageStart = info[0].As<Napi::Number>();
@@ -244,6 +246,32 @@ Napi::Value WrapOLED128x64::API_OLED128x64_clear(const Napi::CallbackInfo &info)
   Napi::Env env = info.Env();
 
   this->oled128x64().clear();
+
+  return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapOLED128x64::API_OLED128x64_line(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+
+  if (info.Length() != 5)
+  {
+    Napi::Error::New(env, "Requre 5 argument(x0, y0, x1, y1, c)").ThrowAsJavaScriptException();
+  }
+
+  auto nx0 = info[0].As<Napi::Number>();
+  auto ny0 = info[1].As<Napi::Number>();
+  auto nx1 = info[2].As<Napi::Number>();
+  auto ny1 = info[3].As<Napi::Number>();
+  auto ncc = info[4].As<Napi::Number>();
+  int16_t x0 = int16_t(nx0.Int32Value());
+  int16_t y0 = int16_t(ny0.Int32Value());
+  int16_t x1 = int16_t(nx1.Int32Value());
+  int16_t y1 = int16_t(ny1.Int32Value());
+  uint16_t cc = uint16_t(ncc.Int32Value());
+
+  this->oled128x64().draw_line(x0, y0, x1, y1, cc);
+  this->oled128x64().flush_display();
 
   return Napi::Number::New(env, 0);
 }
