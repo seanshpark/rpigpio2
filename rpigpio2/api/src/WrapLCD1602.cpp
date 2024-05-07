@@ -39,6 +39,7 @@ void WrapLCD1602::Init(Napi::Env &env, Napi::Object &exports)
       InstanceMethod("puts", &WrapLCD1602::API_LCD1602_puts),
       InstanceMethod("putc", &WrapLCD1602::API_LCD1602_putc),
       InstanceMethod("move", &WrapLCD1602::API_LCD1602_move),
+      InstanceMethod("cgram", &WrapLCD1602::API_LCD1602_cgram),
     }
   );
   // clang-format on
@@ -196,6 +197,31 @@ Napi::Value WrapLCD1602::API_LCD1602_move(const Napi::CallbackInfo &info)
   auto row = info[0].As<Napi::Number>();
   auto col = info[1].As<Napi::Number>();
   this->lcd1602().move(row.Int32Value() & 0xff, col.Int32Value() & 0xff);
+
+  return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapLCD1602::API_LCD1602_cgram(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+
+  if (info.Length() != 2)
+    Napi::Error::New(env, "Requre 2 argument(ch, data)").ThrowAsJavaScriptException();
+
+  auto ch = info[0].As<Napi::Number>();
+  uint8_t chval = static_cast<uint8_t>(ch.Int32Value()) & 0x3f;
+
+  if (!info[1].IsTypedArray())
+    Napi::Error::New(env, "data should be Uint8Array").ThrowAsJavaScriptException();
+
+  auto typeddata = info[1].As<Napi::TypedArray>();
+  if (typeddata.ByteLength() != 8)
+    Napi::Error::New(env, "data should be length 8").ThrowAsJavaScriptException();
+
+  auto data = typeddata.ArrayBuffer();
+  auto buffer = reinterpret_cast<uint8_t *>(data.Data());
+
+  this->lcd1602().cgram(chval, buffer, data.ByteLength());
 
   return Napi::Number::New(env, 0);
 }

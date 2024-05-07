@@ -44,6 +44,7 @@ public:
   void puts(const char *str);
   void putch(uint8_t ch);
   void move(uint8_t row, uint8_t col);
+  void cgram(uint8_t ch, uint8_t *data, size_t leng);
 
 private:
   void function_set(uint8_t data);

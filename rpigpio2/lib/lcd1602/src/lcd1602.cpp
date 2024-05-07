@@ -197,6 +197,22 @@ void LCD1602::move(uint8_t row, uint8_t col)
   usleep(50);
 }
 
+void LCD1602::cgram(uint8_t ch, uint8_t *data, size_t leng)
+{
+  uint8_t cmd = HD44780_LCD_CMD_CGRAMADDR;
+  // NOTE CGRAM address is mapped as 8 bytes per character
+  // << 3 (== *8) to jump to address of ch
+  cmd |= (ch << 3) & 0x3f;
+  send_ctrl(cmd);
+  usleep(50);
+
+  for (size_t p = 0; p < leng; ++p)
+  {
+    send_data(data[p]);
+    usleep(50);
+  }
+}
+
 } // namespace rpigpio2
 
 namespace rpigpio2

@@ -34,6 +34,13 @@ blink:
 lcd16:
 	$(NODE) app/lcd1602/main_0.js
 
+lcdcus:
+	$(NODE) app/lcd1602/custom.js
+
+# lcd with huge font 2x2
+lcdhf:
+	$(NODE) app/lcd1602/font22.js
+
 cputemp:
 	$(NODE) app/cputemp/main.js
 

@@ -43,6 +43,7 @@ public:
   Napi::Value API_LCD1602_puts(const Napi::CallbackInfo &info);
   Napi::Value API_LCD1602_putc(const Napi::CallbackInfo &info);
   Napi::Value API_LCD1602_move(const Napi::CallbackInfo &info);
+  Napi::Value API_LCD1602_cgram(const Napi::CallbackInfo &info);
 
 public:
   LCD1602 &lcd1602() { return _lcd1602; }
