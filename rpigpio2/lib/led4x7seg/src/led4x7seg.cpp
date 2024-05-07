@@ -24,7 +24,7 @@
 namespace
 {
 
-static uint8_t _seg_data[] = {
+uint8_t _seg_data_num[] = {
   0b00111111, // 0
   0b00000110, // 1
   0b01011011, // 2
@@ -36,6 +36,23 @@ static uint8_t _seg_data[] = {
   0b01111111, // 8
   0b01101111  // 9
 };
+
+uint8_t _seg_data_etc[] = {
+  0b01100011, // o for °C
+};
+
+//   -A-
+//  |   |
+//  F   B
+//  |   |
+//   -G-
+//  |   |
+//  E   C
+//  |   |
+//   -D-
+//
+// Bit | 7 6 5 4 3 2 1 0
+// Seg |   G F E D C B A
 
 } // namespace
 
@@ -66,7 +83,7 @@ void LED4x7Seg::show(const std::string value)
   uint32_t val_length = value.length();
   assert(val_length == 5);
   // value should be format of "xx:xx" or "xx xx"
-  // where x is '0' ~ '9'
+  // where x is '0' ~ '9' and some more
 
   uint8_t tm1637_data[5];
   uint32_t data_idx = 0;
@@ -82,15 +99,19 @@ void LED4x7Seg::show(const std::string value)
     {
       colon = (c == ':') || (c == '.');
     }
-    else
+    else if ('0' <= c && c <= '9')
     {
       auto cidx = static_cast<int32_t>(c - '0');
-      if (cidx < 0 || cidx > 9)
-        cidx = 0;
-
-      auto cdata = _seg_data[cidx];
+      auto cdata = _seg_data_num[cidx];
       tm1637_data[data_idx++] = cdata;
     }
+    else if (c == 'o')
+    {
+      auto cdata = _seg_data_etc[0];
+      tm1637_data[data_idx++] = cdata;
+    }
+    else
+      tm1637_data[data_idx++] = 0b00000000;
   }
   if (colon)
   {
