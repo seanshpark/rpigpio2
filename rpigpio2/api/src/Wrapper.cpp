@@ -20,6 +20,7 @@
 #include "WrapI2C.h"
 #include "WrapPCF8574.h"
 #include "WrapTM1637.h"
+#include "WrapMCP23017.h"
 #include "WrapLCD1602.h"
 #include "WrapLED4x7Seg.h"
 #include "WrapOLED128x64.h"
@@ -52,6 +53,7 @@ void Wrapper::Init(Napi::Env &env, Napi::Object &exports)
   WrapI2C::Init(env, exports);
   WrapPCF8574::Init(env, exports);
   WrapTM1637::Init(env, exports);
+  WrapMCP23017::Init(env, exports);
   WrapLCD1602::Init(env, exports);
   WrapLED4x7Seg::Init(env, exports);
   WrapOLED128x64::Init(env, exports);
