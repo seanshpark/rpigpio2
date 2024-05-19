@@ -38,7 +38,6 @@ public:
   bool initialized(void) { return _initalized; }
 
 public:
-  void init_display(void);
   void clear_display(void);
   void flush_display(void);
   void draw_pixel(int16_t x, int16_t y, uint16_t color) override;
