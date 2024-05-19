@@ -50,8 +50,8 @@ bool MCP23017::init(I2C *i2c)
 
   send(MCP23017_IODIRA, 0x00); // port A to write mode
   send(MCP23017_IODIRB, 0x00); // port B to write mode
-  send(MCP23017_OLATA, 0x00); // port A to low
-  send(MCP23017_OLATB, 0x00); // port B to low
+  //send(MCP23017_OLATA, 0x00); // port A to low
+  //send(MCP23017_OLATB, 0x00); // port B to low
 
   _initalized = true;
 
@@ -65,8 +65,8 @@ void MCP23017::release(void)
     assert(false);
     return;
   }
-  send(MCP23017_OLATA, 0x00); // port A to low
-  send(MCP23017_OLATB, 0x00); // port B to low
+  //send(MCP23017_OLATA, 0x00); // port A to h
+  //send(MCP23017_OLATB, 0x00); // port B to h
 
   _initalized = false;
   _i2c = nullptr;
@@ -88,6 +88,26 @@ void MCP23017::write(uint16_t data)
   send(MCP23017_OLATB, datab);
 }
 
+void MCP23017::writeA(uint8_t data)
+{
+  if (_i2c == nullptr)
+  {
+    assert(false);
+    return;
+  }
+  send(MCP23017_OLATA, data);
+}
+
+void MCP23017::writeB(uint8_t data)
+{
+  if (_i2c == nullptr)
+  {
+    assert(false);
+    return;
+  }
+  send(MCP23017_OLATB, data);
+}
+
 } // namespace rpigpio2
 
 //
@@ -101,6 +121,7 @@ void MCP23017::send(uint8_t addr, uint8_t data)
   mcp23017Send mcpsend;
   mcpsend.addr = addr;
   mcpsend.data = data;
+  // std::cout << "Addr:" << (int)addr << " Data:" << (int)data << std::endl;
   _i2c->write_buffer((uint8_t *)&mcpsend, 2);
 }
 

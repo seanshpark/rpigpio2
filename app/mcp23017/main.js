@@ -98,4 +98,4 @@ function timerInterval() {
   }
 }
 
-setInterval(timerInterval, 30);
+setInterval(timerInterval, 100);

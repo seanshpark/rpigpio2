@@ -33,6 +33,8 @@ public:
   void release(void);
 
   void write(uint16_t data);
+  void writeA(uint8_t data);
+  void writeB(uint8_t data);
 
 public:
   bool initialized(void) { return _initalized; }
