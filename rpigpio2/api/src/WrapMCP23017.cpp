@@ -31,7 +31,13 @@ void WrapMCP23017::Init(Napi::Env &env, Napi::Object &exports)
     {
       InstanceMethod("init", &WrapMCP23017::API_MCP23017_init),
       InstanceMethod("release", &WrapMCP23017::API_MCP23017_release),
+      InstanceMethod("modeA", &WrapMCP23017::API_MCP23017_modeA),
+      InstanceMethod("modeB", &WrapMCP23017::API_MCP23017_modeB),
       InstanceMethod("write", &WrapMCP23017::API_MCP23017_write),
+      InstanceMethod("writeA", &WrapMCP23017::API_MCP23017_writeA),
+      InstanceMethod("writeB", &WrapMCP23017::API_MCP23017_writeB),
+      InstanceMethod("readA", &WrapMCP23017::API_MCP23017_readA),
+      InstanceMethod("readB", &WrapMCP23017::API_MCP23017_readB),
     }
   );
   // clang-format on
@@ -79,20 +85,68 @@ Napi::Value WrapMCP23017::API_MCP23017_release(const Napi::CallbackInfo &info)
   return Napi::Number::New(env, 0);
 }
 
+Napi::Value WrapMCP23017::API_MCP23017_modeA(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  if (info.Length() != 1)
+    Napi::Error::New(env, "Requre 1 argument(data)").ThrowAsJavaScriptException();
+  auto data = info[0].As<Napi::Number>();
+  this->mcp23017().modeA(data.Int32Value() & 0xff);
+  return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapMCP23017::API_MCP23017_modeB(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  if (info.Length() != 1)
+    Napi::Error::New(env, "Requre 1 argument(data)").ThrowAsJavaScriptException();
+  auto data = info[0].As<Napi::Number>();
+  this->mcp23017().modeB(data.Int32Value() & 0xff);
+  return Napi::Number::New(env, 0);
+}
+
 Napi::Value WrapMCP23017::API_MCP23017_write(const Napi::CallbackInfo &info)
 {
   Napi::Env env = info.Env();
-
   if (info.Length() != 1)
-  {
     Napi::Error::New(env, "Requre 1 argument(data)").ThrowAsJavaScriptException();
-  }
-
   auto data = info[0].As<Napi::Number>();
-  
   this->mcp23017().write(data.Int32Value() & 0xffff);
-
   return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapMCP23017::API_MCP23017_writeA(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  if (info.Length() != 1)
+    Napi::Error::New(env, "Requre 1 argument(data)").ThrowAsJavaScriptException();
+  auto data = info[0].As<Napi::Number>();
+  this->mcp23017().writeA(data.Int32Value() & 0xff);
+  return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapMCP23017::API_MCP23017_writeB(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  if (info.Length() != 1)
+    Napi::Error::New(env, "Requre 1 argument(data)").ThrowAsJavaScriptException();
+  auto data = info[0].As<Napi::Number>();
+  this->mcp23017().writeB(data.Int32Value() & 0xff);
+  return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapMCP23017::API_MCP23017_readA(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  auto val = this->mcp23017().readA();
+  return Napi::Number::New(env, val);
+}
+
+Napi::Value WrapMCP23017::API_MCP23017_readB(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+  auto val = this->mcp23017().readB();
+  return Napi::Number::New(env, val);
 }
 
 } // namespace rpigpio2

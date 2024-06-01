@@ -32,15 +32,22 @@ public:
   bool init(I2C *i2c);
   void release(void);
 
+  void modeA(uint8_t iomode);
+  void modeB(uint8_t iomode);
+
   void write(uint16_t data);
   void writeA(uint8_t data);
   void writeB(uint8_t data);
+
+  uint8_t readA(void);
+  uint8_t readB(void);
 
 public:
   bool initialized(void) { return _initalized; }
 
 private:
   void send(uint8_t addr, uint8_t data);
+  uint8_t read(uint8_t addr);
 
 private:
   I2C *_i2c = nullptr;

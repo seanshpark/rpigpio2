@@ -39,6 +39,8 @@ public:
   bool write_byte(uint8_t b);
   bool write_buffer(uint8_t *b, size_t s);
 
+  bool read_byte(uint8_t &b);
+
 private:
   GPIO *_gpio = nullptr; // not used for now
   int _dev_fd = -1;

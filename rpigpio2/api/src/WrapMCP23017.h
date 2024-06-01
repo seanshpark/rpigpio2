@@ -35,7 +35,13 @@ public:
 public:
   Napi::Value API_MCP23017_init(const Napi::CallbackInfo &info);
   Napi::Value API_MCP23017_release(const Napi::CallbackInfo &info);
+  Napi::Value API_MCP23017_modeA(const Napi::CallbackInfo &info);
+  Napi::Value API_MCP23017_modeB(const Napi::CallbackInfo &info);
   Napi::Value API_MCP23017_write(const Napi::CallbackInfo &info);
+  Napi::Value API_MCP23017_writeA(const Napi::CallbackInfo &info);
+  Napi::Value API_MCP23017_writeB(const Napi::CallbackInfo &info);
+  Napi::Value API_MCP23017_readA(const Napi::CallbackInfo &info);
+  Napi::Value API_MCP23017_readB(const Napi::CallbackInfo &info);
 public:
   MCP23017 &mcp23017() { return _mcp23017; }
 

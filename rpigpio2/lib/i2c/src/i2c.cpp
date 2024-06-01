@@ -92,6 +92,21 @@ bool I2C::write_byte(uint8_t b)
   return true;
 }
 
+bool I2C::read_byte(uint8_t &b)
+{
+  assert(_dev_fd > 0);
+
+  if (_dev_fd <= 0)
+    return false;
+
+  if (::read(_dev_fd, &b, 1) != 1)
+  {
+    return false;
+  }
+  // std::cout << "I2C " << std::hex << int32_t(b) << std::endl;
+  return true;
+}
+
 bool I2C::write_buffer(uint8_t *b, size_t s)
 {
   assert(_dev_fd > 0);

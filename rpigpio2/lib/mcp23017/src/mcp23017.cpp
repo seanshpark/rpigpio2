@@ -23,8 +23,24 @@
 #define MCP23017_IODIRA   0x00  // A direction
 #define MCP23017_IODIRB   0x01  // B direction
 
+#define MCP23017_GPIOA    0x12  // A output
+#define MCP23017_GPIOB    0x13  // B output
 #define MCP23017_OLATA    0x14  // A output latch
 #define MCP23017_OLATB    0x15  // B output latch
+
+#define CHECK_PTR(PTR) \
+  if (PTR == nullptr)  \
+  {                    \
+    assert(false);     \
+    return;            \
+  }
+
+#define CHECK_PTR_0(PTR) \
+  if (PTR == nullptr)    \
+  {                      \
+    assert(false);       \
+    return 0;            \
+  }
 
 namespace rpigpio2
 {
@@ -50,8 +66,8 @@ bool MCP23017::init(I2C *i2c)
 
   send(MCP23017_IODIRA, 0x00); // port A to write mode
   send(MCP23017_IODIRB, 0x00); // port B to write mode
-  //send(MCP23017_OLATA, 0x00); // port A to low
-  //send(MCP23017_OLATB, 0x00); // port B to low
+  send(MCP23017_GPIOA, 0x00);  // port A to high
+  send(MCP23017_GPIOB, 0x00);  // port B to high
 
   _initalized = true;
 
@@ -60,52 +76,65 @@ bool MCP23017::init(I2C *i2c)
 
 void MCP23017::release(void)
 {
-  if (_i2c == nullptr)
-  {
-    assert(false);
-    return;
-  }
-  //send(MCP23017_OLATA, 0x00); // port A to h
-  //send(MCP23017_OLATB, 0x00); // port B to h
+  CHECK_PTR(_i2c);
 
+  send(MCP23017_GPIOA, 0x00);  // port A to high
+  send(MCP23017_GPIOB, 0x00);  // port B to high
   _initalized = false;
   _i2c = nullptr;
 
   std::cout << "MCP23017::release" << std::endl;
 }
 
+// bit set -> read mode
+// bit clr -> write mode
+void MCP23017::modeA(uint8_t iomode)
+{
+  send(MCP23017_IODIRA, iomode);
+}
+
+void MCP23017::modeB(uint8_t iomode)
+{
+  send(MCP23017_IODIRB, iomode);
+}
+
 // Low 8bit is for PortA, High 8bit is for PortB
 void MCP23017::write(uint16_t data)
 {
-  if (_i2c == nullptr)
-  {
-    assert(false);
-    return;
-  }
+  CHECK_PTR(_i2c);
+
   uint8_t dataa = (uint8_t)(data & 0xff);
   uint8_t datab = (uint8_t)((data >> 8) & 0xff);
-  send(MCP23017_OLATA, dataa);
-  send(MCP23017_OLATB, datab);
+  send(MCP23017_GPIOA, dataa);
+  send(MCP23017_GPIOB, datab);
 }
 
 void MCP23017::writeA(uint8_t data)
 {
-  if (_i2c == nullptr)
-  {
-    assert(false);
-    return;
-  }
-  send(MCP23017_OLATA, data);
+  CHECK_PTR(_i2c);
+
+  send(MCP23017_GPIOA, data);
 }
 
 void MCP23017::writeB(uint8_t data)
 {
-  if (_i2c == nullptr)
-  {
-    assert(false);
-    return;
-  }
-  send(MCP23017_OLATB, data);
+  CHECK_PTR(_i2c);
+
+  send(MCP23017_GPIOB, data);
+}
+
+uint8_t MCP23017::readA(void)
+{
+  CHECK_PTR_0(_i2c);
+
+  return read(MCP23017_GPIOA);
+}
+
+uint8_t MCP23017::readB(void)
+{
+  CHECK_PTR_0(_i2c);
+
+  return read(MCP23017_GPIOB);
 }
 
 } // namespace rpigpio2
@@ -123,6 +152,16 @@ void MCP23017::send(uint8_t addr, uint8_t data)
   mcpsend.data = data;
   // std::cout << "Addr:" << (int)addr << " Data:" << (int)data << std::endl;
   _i2c->write_buffer((uint8_t *)&mcpsend, 2);
+}
+
+uint8_t MCP23017::read(uint8_t addr)
+{
+  _i2c->write_byte(addr);
+
+  uint8_t data;
+  if (_i2c->read_byte(data))
+    return data;
+  return 0;
 }
 
 } // namespace rpigpio2
