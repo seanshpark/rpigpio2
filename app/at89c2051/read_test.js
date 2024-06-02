@@ -79,6 +79,10 @@ let AddrPtrC = 0x0000; // dump buffer count
 let buffer = [];
 let buffpk = [];
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 function end_dump() {
   clearInterval(intervalID);
   console.log("Interval End");
@@ -99,17 +103,13 @@ function end_dump() {
 
   fs.writeFile(process.cwd() + "/read.bin", bin_to_save, function(err) {
     if (err) throw err;
+    console.log("Save to read.bin done.");
+
+    let options = {};
+    options.exit = true;
+    exitHandler(options, 0);
   });
-
   console.log("End of read.");
-
-  let options = {};
-  options.exit = true;
-  exitHandler(options, 0);
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // TODO enlarge this to 2048

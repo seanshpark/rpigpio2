@@ -185,4 +185,4 @@ async function timerInterval() {
   }
 }
 
-intervalID = setInterval(timerInterval, 50);
+intervalID = setInterval(timerInterval, 30);
