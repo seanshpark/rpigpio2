@@ -68,38 +68,42 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-console.log("== Begin erase");
-let gpb_data = ERASE_MODE;
-mcp23017.writeB(gpb_data);
-sleep(10);
+async function do_erase() {
+  console.log("== Begin erase");
+  let gpb_data = ERASE_MODE;
+  mcp23017.writeB(gpb_data);
+  await sleep(10);
 
-console.log("== Erase VPP +12V");
-// VPP +12V
-gpb_data = (gpb_data & ~RST_VPP_0V) | RST_VPP_12V;
-mcp23017.writeB(gpb_data);
-sleep(10);
+  console.log("== Erase VPP +12V");
+  // VPP +12V
+  gpb_data = (gpb_data & ~RST_VPP_0V) | RST_VPP_12V;
+  mcp23017.writeB(gpb_data);
+  await sleep(10);
 
-console.log("== Erase Prog H");
-// P3_2 L
-gpb_data = gpb_data & ~P3_2;
-mcp23017.writeB(gpb_data)
-sleep(20);
+  console.log("== Erase Prog H");
+  // P3_2 L
+  gpb_data = gpb_data & ~P3_2;
+  mcp23017.writeB(gpb_data)
+  await sleep(20);
 
-console.log("== Erase Prog L");
-// P3_2 H
-gpb_data = gpb_data | P3_2;
-mcp23017.writeB(gpb_data)
-sleep(1000);
-// P3.1 will be L (BUSY) while erase
-// just wait 1000msec for now
+  console.log("== Erase Prog L");
+  // P3_2 H
+  gpb_data = gpb_data | P3_2;
+  mcp23017.writeB(gpb_data)
+  await sleep(1000);
+  // P3.1 will be L (BUSY) while erase
+  // just wait 1000msec for now
 
-console.log("== Erase VPP 0V");
-// VPP +0V
-gpb_data = (gpb_data & ~RST_VPP_12V) | POWER_OFF;
-mcp23017.writeB(gpb_data);
+  console.log("== Erase VPP 0V");
+  // VPP +0V
+  gpb_data = (gpb_data & ~RST_VPP_12V) | POWER_OFF;
+  mcp23017.writeB(gpb_data);
 
-console.log("== Erase End");
+  console.log("== Erase End");
 
-let options = {};
-options.exit = true;
-exitHandler(options, 0);
+  let options = {};
+  options.exit = true;
+  exitHandler(options, 0);
+}
+
+do_erase();

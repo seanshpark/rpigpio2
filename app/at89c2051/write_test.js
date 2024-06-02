@@ -109,17 +109,19 @@ let intervalID = 0;
 let Address = 0x0000;
 let AddrEnd = 0x0800; // 2048 byte
 
-function end_write() {
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function end_write() {
   clearInterval(intervalID);
   console.log("Write End");
+
+  await sleep(1000);
 
   let options = {};
   options.exit = true;
   exitHandler(options, 0);
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 Address = 0;
@@ -139,23 +141,24 @@ async function timerInterval() {
     // VPP to 12V, write mode
     gpb_data = WRITE_MODE_12V;
     mcp23017.writeB(gpb_data)
-    sleep(1);
+    await sleep(1);
     
     // pulse P3_2
     gpb_data = gpb_data & ~P3_2;
     mcp23017.writeB(gpb_data)
-    sleep(5);
+    await sleep(5);
     gpb_data = gpb_data | P3_2;
     mcp23017.writeB(gpb_data)
+    await sleep(5);
 
     // VPP to 5V, read mode
     gpb_data = READ_MODE;
     mcp23017.writeB(gpb_data)
-    sleep(1);
+    await sleep(1);
 
     // verify data
-    mcp23017.modeA(0xff); // GPA as input
-    sleep(1);
+    mcp23017.modeA(0xff); // GPA as read
+    await sleep(1);
     gpa_veri = mcp23017.readA();
     if (gpa_veri != gpa_data) {
       console.log("!!! data write error:", gpa_data, gpa_veri);
@@ -168,9 +171,11 @@ async function timerInterval() {
     // increment address, exit if end
     gpb_data |= XTAL1;
     mcp23017.writeB(gpb_data);
-    await sleep(0);
+    await sleep(1);
     gpb_data &= ~XTAL1;
     mcp23017.writeB(gpb_data);
+    await sleep(1);
+
     Address++;
     if (Address >= AddrEnd) {
       gpb_data = POWER_OFF;
@@ -180,4 +185,4 @@ async function timerInterval() {
   }
 }
 
-intervalID = setInterval(timerInterval, 10);
+intervalID = setInterval(timerInterval, 50);

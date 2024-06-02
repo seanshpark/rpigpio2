@@ -90,7 +90,7 @@ function end_dump() {
     buffer.pop();
     buff_end = buffer.length - 1;
   }
-  console.log("Buffer leng:", buffer.length);
+  console.log("Actual leng:", buffer.length);
 
   let bin_to_save = new Uint8Array(buffer.length);
   for (let idx = 0; idx < buffer.length; idx++) {
@@ -150,4 +150,4 @@ async function timerInterval() {
   }
 }
 
-intervalID = setInterval(timerInterval, 10);
+intervalID = setInterval(timerInterval, 3);
