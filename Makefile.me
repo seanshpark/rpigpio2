@@ -62,6 +62,22 @@ mcp:
 mc1:
 	$(NODE) app/mcp23017/readbit.js
 
+# 2051 programmer test voltage control
+at8v:
+	$(NODE) app/at89c2051/volt_ctrl.js
+
+# 2051 programmer test read
+at8r:
+	$(NODE) app/at89c2051/read_test.js
+
+# 2051 programmer test erase
+at8e:
+	$(NODE) app/at89c2051/erase_test.js
+
+# 2061 programmer test write
+at8w:
+	$(NODE) app/at89c2051/write_test.js
+
 dm1:
 	$(NODE) app/lcd12864/text_loop.js
 

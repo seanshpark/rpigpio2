@@ -66,8 +66,8 @@ bool MCP23017::init(I2C *i2c)
 
   send(MCP23017_IODIRA, 0x00); // port A to write mode
   send(MCP23017_IODIRB, 0x00); // port B to write mode
-  send(MCP23017_GPIOA, 0x00);  // port A to high
-  send(MCP23017_GPIOB, 0x00);  // port B to high
+  send(MCP23017_GPIOA, 0xff);  // port A to high
+  send(MCP23017_GPIOB, 0xff);  // port B to high
 
   _initalized = true;
 
@@ -78,8 +78,8 @@ void MCP23017::release(void)
 {
   CHECK_PTR(_i2c);
 
-  send(MCP23017_GPIOA, 0x00);  // port A to high
-  send(MCP23017_GPIOB, 0x00);  // port B to high
+  send(MCP23017_GPIOA, 0xff);  // port A to high
+  send(MCP23017_GPIOB, 0xff);  // port B to high
   _initalized = false;
   _i2c = nullptr;
 
