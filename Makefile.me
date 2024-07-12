@@ -62,6 +62,14 @@ mcp:
 mc1:
 	$(NODE) app/mcp23017/readbit.js
 
+# 2051 as i2c target test
+at80:
+	$(NODE) app/at89c2051/i2c.js
+
+at81:
+	$(NODE) app/at89c2051/i2c_kit.js
+
+
 # 2051 programmer test voltage control
 at8v:
 	$(NODE) app/at89c2051/volt_ctrl.js

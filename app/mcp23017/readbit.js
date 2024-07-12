@@ -14,7 +14,7 @@ const mcp23017 = new rpigpio2.MCP23017();
 // command -> mcp23017 -> i2c (-> gpio)
 gpio.init();
 // Test MCP23017 is set address to 0x27
-i2c.init(gpio, 1, 0x27);
+i2c.init(gpio, 1, 0x20);
 // 1 is for I2C-1 as (SDA @ pin2, CLK @ pin3)
 mcp23017.init(i2c);
 mcp23017.modeA(0b10000000); // A7 as input
