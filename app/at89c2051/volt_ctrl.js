@@ -36,20 +36,27 @@ let value = 0x0300;
 mcp23017.write(value);
 console.log("value = ", value >> 8)
 
-// off, 5v, 12v, 5v
-let values = [0x0300, 0x0200, 0x0000, 0x0200];
-let volts = ["12", "??", "5", "0"];
-let idx = 0;
+//                                               GPB       GPA
+//const RST_VPP_0V  = GPB1 | GPB0; // H H --> 0b 0000 0011 0000 0000
+//const RST_VPP_5V  = GPB1;        // H L --> 0b 0000 0010 0000 0000
+//const RST_VPP_12V = 0;           // L L --> 0b 0000 0000 0000 0000
+
+// set index to 0, 1 or 2 to check voltage to RST pin
+// each are 9, 5v, and S12v
+let values = [0x0300, 0x0200, 0x0000];
+let volts  = [  "0v",   "5v",  "12v"];
+let idx = 2;
 
 function timerInterval() {
   let value = values[idx];
-  let vv = value >> 8;
   mcp23017.write(value);
-  console.log("value = ", idx, volts[vv]);
-  idx = idx + 1;
-  if (idx >= values.length) {
-    idx = 0;
-  }
+
+  let vv = value >> 8;
+  console.log("value = ", idx, vv, volts[idx]);
+  //idx = idx + 1;
+  //if (idx >= values.length) {
+  //  idx = 0;
+  //}
 }
 
 setInterval(timerInterval, 2500);
