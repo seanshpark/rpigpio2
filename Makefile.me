@@ -62,6 +62,7 @@ mcp:
 mc1:
 	$(NODE) app/mcp23017/readbit.js
 
+#
 # 2051 as i2c target test
 at80:
 	$(NODE) app/at89c2051/i2c.js
@@ -88,18 +89,11 @@ at8w:
 
 dm1:
 	$(NODE) app/lcd12864/text_loop.js
+# $(NODE) app/lcd12864/text_rand.js
+#	$(NODE) app/lcd12864/gr_toggle.js
+#	$(NODE) app/lcd12864/gr_fill.js
+#	$(NODE) app/lcd12864/gr_font.js
+#	$(NODE) app/lcd12864/gr_font_bm.js
 
-dm2:
-	$(NODE) app/lcd12864/text_rand.js
-
-dm11:
-	$(NODE) app/lcd12864/gr_toggle.js
-
-dm12:
-	$(NODE) app/lcd12864/gr_fill.js
-
-dm13:
-	$(NODE) app/lcd12864/gr_font.js
-
-dm14:
-	$(NODE) app/lcd12864/gr_font_bm.js
+rtc:
+	$(NODE) app/rtc/main.js

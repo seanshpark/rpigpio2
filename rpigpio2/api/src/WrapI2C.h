@@ -36,6 +36,7 @@ public:
   Napi::Value API_I2C_init(const Napi::CallbackInfo &info);
   Napi::Value API_I2C_release(const Napi::CallbackInfo &info);
   Napi::Value API_I2C_write(const Napi::CallbackInfo &info);
+  Napi::Value API_I2C_read(const Napi::CallbackInfo &info);
 
 public:
   I2C &i2c() { return _i2c; }

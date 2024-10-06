@@ -38,6 +38,7 @@ public:
 public:
   bool write_byte(uint8_t b);
   bool write_buffer(uint8_t *b, size_t s);
+  bool read_buffer(uint8_t *b, size_t s);
 
   bool read_byte(uint8_t &b);
 

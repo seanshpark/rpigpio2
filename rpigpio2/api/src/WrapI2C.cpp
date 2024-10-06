@@ -30,7 +30,8 @@ void WrapI2C::Init(Napi::Env &env, Napi::Object &exports)
     {
       InstanceMethod("init", &WrapI2C::API_I2C_init),
       InstanceMethod("release", &WrapI2C::API_I2C_release),
-      InstanceMethod("write", &WrapI2C::API_I2C_write)
+      InstanceMethod("write", &WrapI2C::API_I2C_write),
+      InstanceMethod("read", &WrapI2C::API_I2C_read)
     }
   );
   // clang-format on
@@ -101,6 +102,30 @@ Napi::Value WrapI2C::API_I2C_write(const Napi::CallbackInfo &info)
   if (!this->i2c().write_buffer(buffer, data.ByteLength()))
   {
     Napi::Error::New(env, "Failed to write I2C").ThrowAsJavaScriptException();
+  }
+
+  return Napi::Number::New(env, 0);
+}
+
+Napi::Value WrapI2C::API_I2C_read(const Napi::CallbackInfo &info)
+{
+  Napi::Env env = info.Env();
+
+  if (info.Length() != 1)
+  {
+    Napi::Error::New(env, "Requre 1 argument(data)").ThrowAsJavaScriptException();
+  }
+
+  if (not info[0].IsArrayBuffer())
+  {
+    Napi::Error::New(env, "Argument shoud be Buffer").ThrowAsJavaScriptException();
+  }
+
+  auto data = info[0].As<Napi::ArrayBuffer>();
+  auto buffer = reinterpret_cast<uint8_t *>(data.Data());
+  if (!this->i2c().read_buffer(buffer, data.ByteLength()))
+  {
+    Napi::Error::New(env, "Failed to read I2C").ThrowAsJavaScriptException();
   }
 
   return Napi::Number::New(env, 0);

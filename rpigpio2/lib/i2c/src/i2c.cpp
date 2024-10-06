@@ -123,4 +123,20 @@ bool I2C::write_buffer(uint8_t *b, size_t s)
   return true;
 }
 
+bool I2C::read_buffer(uint8_t *b, size_t s)
+{
+  assert(_dev_fd > 0);
+
+  if (_dev_fd <= 0)
+    return false;
+
+  // std::cout << "I2C read_buffer" << s << std::endl;
+
+  if ((size_t)::read(_dev_fd, b, s) != s)
+  {
+    return false;
+  }
+  return true;
+}
+
 } // namespace rpigpio2
