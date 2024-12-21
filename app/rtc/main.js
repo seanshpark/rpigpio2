@@ -40,10 +40,10 @@ let rtc_data8 = new Uint8Array(rtc_arbf8);
 
   rtc_data9[0] = 0x00; // from addr 0
   rtc_data9[1] = 0x00; // 00 sec
-  rtc_data9[2] = 0x47; // 11 min
-  rtc_data9[3] = 0x20; // 22 hour, in 24H mode
-  rtc_data9[4] = 0x07; // SAT
-  rtc_data9[5] = 0x05; // 04 day
+  rtc_data9[2] = 0x24; // 00 min
+  rtc_data9[3] = 0x16; // 16 hour, in 24H mode
+  rtc_data9[4] = 0x01; // SUN
+  rtc_data9[5] = 0x05; // 06 day
   rtc_data9[6] = 0x10; // 10 month
   rtc_data9[7] = 0x24; // 2024 year
   rtc_data9[8] = 0x00; // SQWE off
