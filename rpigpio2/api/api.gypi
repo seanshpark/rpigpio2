@@ -18,6 +18,7 @@
         "rpigiop2_tm1637",
         "rpigiop2_mcp23017",
         "rpigiop2_oled128x64",
+        "rpigiop2_oled128x32",
       ],
       "sources": [
         "src/Wrapper.cpp",
@@ -30,6 +31,7 @@
         "src/WrapTM1637.cpp",
         "src/WrapMCP23017.cpp",
         "src/WrapOLED128x64.cpp",
+        "src/WrapOLED128x32.cpp",
       ],
       "include_dirs": [
         "<!@(node -p \"require('node-addon-api').include\")",
@@ -44,6 +46,7 @@
         "../lib/tm1637/include",
         "../lib/mcp23107/include",
         "../lib/oled128x64/include",
+        "../lib/oled128x32/include",
       ],
       'defines': [ 'NAPI_CPP_EXCEPTIONS' ],
     }

@@ -12,7 +12,8 @@ const lcd1602 = new rpigpio2.LCD1602();
 
 // command -> lcd1602 -> pcf8574 -> i2c (-> gpio)
 gpio.init();
-i2c.init(gpio, 1, 0x27);
+//i2c.init(gpio, 1, 0x27);
+i2c.init(gpio, 1, 0x3f);
 // 1 is for I2C-1 as (SDA @ pin2, CLK @ pin3)
 // 0x27 is for green backlight LCD1602
 pcf8574.init(i2c);

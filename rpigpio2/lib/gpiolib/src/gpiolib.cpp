@@ -340,8 +340,8 @@ const GPIO_CHIP_T *_find_chip(const char *name)
   for (uint32_t i = 0; __gpio_chips[i].name != nullptr; ++i)
   {
     chip = &__gpio_chips[i];
-    //printf("!!! chip-name: %s\r\n", chip->name);
-    //printf("!!! chip-compatible: %s\r\n", chip->compatible);
+    printf("!!! chip-name: %s\r\n", chip->name);
+    printf("!!! chip-compatible: %s\r\n", chip->compatible);
     if (!strcmp(name, chip->name) || !strcmp(name, chip->compatible))
       return chip;
   }

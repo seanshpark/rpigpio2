@@ -1,4 +1,4 @@
-const rpigpio2 = require(process.cwd() + '/build/Release/rpigpio2');
+const rpigpio2 = require(process.cwd() + '/build/Debug/rpigpio2');
 
 class RPiGpio2 {
 

@@ -11,6 +11,7 @@
     'rpigpio2/lib/lcd12864.gypi',
     'rpigpio2/lib/led4x7seg.gypi',
     'rpigpio2/lib/oled128x64.gypi',
+    'rpigpio2/lib/oled128x32.gypi',
 
     'rpigpio2/api/api.gypi',
     'rpigpio2/core/core.gypi',
