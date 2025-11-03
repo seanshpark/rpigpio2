@@ -18,11 +18,13 @@
 
 #include "WrapGPIO.h"
 #include "WrapI2C.h"
+#include "WrapSPI.h"
 #include "WrapPCF8574.h"
 #include "WrapTM1637.h"
 #include "WrapMCP23017.h"
 #include "WrapLCD1602.h"
 #include "WrapLCD12864.h"
+#include "WrapLCDCO240.h"
 #include "WrapLED4x7Seg.h"
 #include "WrapOLED128x64.h"
 #include "WrapOLED128x32.h"
@@ -53,11 +55,13 @@ void Wrapper::Init(Napi::Env &env, Napi::Object &exports)
   std::cout << "Wrapper::Init" << std::endl;
   WrapGPIO::Init(env, exports);
   WrapI2C::Init(env, exports);
+  WrapSPI::Init(env, exports);
   WrapPCF8574::Init(env, exports);
   WrapTM1637::Init(env, exports);
   WrapMCP23017::Init(env, exports);
   WrapLCD1602::Init(env, exports);
   WrapLCD12864::Init(env, exports);
+  WrapLCDCO240::Init(env, exports);
   WrapLED4x7Seg::Init(env, exports);
   WrapOLED128x64::Init(env, exports);
   WrapOLED128x32::Init(env, exports);
